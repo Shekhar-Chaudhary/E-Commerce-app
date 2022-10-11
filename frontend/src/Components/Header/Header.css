@@ -1,0 +1,51 @@
+
+.header {
+  background-color: #2874f0;
+}
+.navbar {
+  position: fixed;
+}
+.left-div {
+  height: 100%;
+  min-width: 124px;
+}
+.list-name {
+  font-weight: 500 !important;
+  color: white;
+  max-width: 150px;
+  font-size: 18px !important;
+}
+
+.search-bar {
+  padding: 0 16px;
+  border-radius: 2px 0 0 2px;
+  border: 0;
+  outline: 0 none;
+  font-size: 14px;
+  height: 36px;
+  width: 30%;
+}
+
+.login-button {
+  color: #2874f0;
+  font-weight: 500;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 2px;
+  height: 36px;
+  padding: 5px 40px;
+  border: 1px solid #dbdbdb;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  /* background-color: #F8F8F8; */
+}
+
+.flex-container > div {
+  flex-direction: row;
+  
+ 
+}

@@ -1,0 +1,36 @@
+{
+  "name": "e-commerce-app",
+  "version": "1.0.0",
+  "description": "MERN Shopping app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server",
+    "server": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder.js",
+    "data:destroy": "node backend/seeder -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shekhar-Chaudhary/E-commerce-Website.git"
+  },
+  "author": "Shekhar Chaudhary",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shekhar-Chaudhary/E-commerce-Website/issues"
+  },
+  "homepage": "https://github.com/Shekhar-Chaudhary/E-commerce-Website#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.6.5"
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "nodemon": "^2.0.20"
+  }
+}
