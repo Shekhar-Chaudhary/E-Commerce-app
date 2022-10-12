@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
@@ -9,17 +9,18 @@ import ProductScreen from "./screens/ProductScreen";
 function App() {
   return (
     <>
-      <Header />
-      <main className="py-3">
-        <Container>
-          <Routes>
-            <Route path="/" element={<HomeScreen />} />
-            <Route path="/product/:id" element={<ProductScreen />} />
-          </Routes>
-        </Container>
-      </main>
-      <Footer />
-      <div></div>
+      <Router>
+        <Header />
+        <main className="py-3">
+          <Container>
+            <Routes>
+              <Route path="/" element={<HomeScreen />} />
+              <Route path="/product/:id" element={<ProductScreen />} />
+            </Routes>
+          </Container>
+        </main>
+        <Footer />
+      </Router>
     </>
   );
 }
