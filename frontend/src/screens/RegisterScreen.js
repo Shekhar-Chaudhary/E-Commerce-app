@@ -34,12 +34,11 @@ const RegisterScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     //DISPATCH REGISTER
-    if(password !== confirmPassword) {
-        setMessage('Password does not match')
-    }else {
-        dispatch(register(name, email, password))
+    if (password !== confirmPassword) {
+      setMessage("Password does not match");
+    } else {
+      dispatch(register(name, email, password));
     }
-    
   };
 
   return (
@@ -49,7 +48,7 @@ const RegisterScreen = () => {
       {message && <Message variant="danger">{message}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
-      <Form.Group controlId="name" className="mb-2">
+        <Form.Group controlId="name" className="mb-2">
           <Form.Label>Name : </Form.Label>
           <Form.Control
             type="name"
