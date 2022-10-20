@@ -55,7 +55,7 @@ const ProductScreen = () => {
             <Col md={3}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h3>{product.name}</h3>
+                  <h3 className="text-decoration-none text-dark">{product.name}</h3>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
