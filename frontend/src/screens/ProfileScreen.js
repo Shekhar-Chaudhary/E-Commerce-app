@@ -147,7 +147,7 @@ const ProfileScreen = () => {
                     <td>{order._id}</td>
                     <td>{order.createdAt}</td>
                     <td>{order.totalPrice}</td>
-                    <td>
+                    <td className="text-center">
                       {order.isPaid ? (
                         order.paidAt
                       ) : (
@@ -157,7 +157,7 @@ const ProfileScreen = () => {
                         ></i>
                       )}
                     </td>
-                    <td>
+                    <td className="text-center">
                       {order.isDelivered ? (
                         order.deliveredAt.subString(0, 10)
                       ) : (
