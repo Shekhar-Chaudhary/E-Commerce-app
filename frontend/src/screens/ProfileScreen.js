@@ -65,7 +65,7 @@ const ProfileScreen = () => {
     }
   };
 
-  console.log(orders)
+  
 
   return (
     <>
