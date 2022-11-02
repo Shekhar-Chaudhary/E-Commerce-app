@@ -10,7 +10,7 @@ import { USER_UPDATE_RESET } from "../constants/userConstants";
 
 const UserEditScreen = () => {
   const userId = useParams();
-  console.log(userId);
+  console.log(userId.id);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,8 +38,8 @@ const UserEditScreen = () => {
       dispatch({ type: USER_UPDATE_RESET });
       navigate("/admin/userlist");
     } else {
-      if (!user.name || user._id !== userId) {
-        dispatch(getUserDetails(userId));
+      if (!user.name || user._id !== userId.id) {
+        dispatch(getUserDetails(userId.id));
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -51,7 +51,7 @@ const UserEditScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     //DISPATCH UPDATE
-    dispatch(updateUser({ _id: userId, name, email, isAdmin }));
+    dispatch(updateUser({ _id: userId.id, name, email, isAdmin }));
   };
 
   return (
