@@ -1,22 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import { createOrder, getOrderDetails } from "../actions/orderActions.js";
+import {  useParams } from "react-router-dom";
+import { deliverOrder, getOrderDetails } from "../actions/orderActions.js";
 import Message from "../Components/Message/Message";
 import Loader from "../Components/Loader/Loader";
 import { Link } from "react-router-dom";
+import { ORDER_DELIVER_RESET } from "../constants/orderConstants.js";
 
 const OrderScreen = () => {
   const id = useParams();
-  console.log(id);
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
-  console.log(order);
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -35,7 +38,15 @@ const OrderScreen = () => {
 
   useEffect(() => {
     dispatch(getOrderDetails(id));
-  }, [dispatch, id]);
+    if (successDeliver) {
+      dispatch({ type: ORDER_DELIVER_RESET });
+      
+    }
+  }, [dispatch, id, successDeliver]);
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+  };
 
   return loading ? (
     <Loader />
@@ -55,7 +66,13 @@ const OrderScreen = () => {
               </p>
               <p>
                 <strong>Email : </strong>{" "}
-                <a href={`mailto:${order.user.email}`} className="text-decoration-none text-dark"> {order.user.email} </a>
+                <a
+                  href={`mailto:${order.user.email}`}
+                  className="text-decoration-none text-dark"
+                >
+                  {" "}
+                  {order.user.email}{" "}
+                </a>
               </p>
               <p>
                 <strong>Address : </strong>
@@ -155,6 +172,18 @@ const OrderScreen = () => {
                   <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+              {loadingDeliver && <Loader />}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type="button"
+                    className="btn btn-block"
+                    onClick={deliverHandler}
+                  >
+                    Mark As Delivered
+                  </Button>
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>

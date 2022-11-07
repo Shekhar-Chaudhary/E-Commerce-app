@@ -145,11 +145,11 @@ const ProfileScreen = () => {
                 {orders.map((order) => (
                   <tr key={order._id}>
                     <td>{order._id}</td>
-                    <td>{order.createdAt}</td>
+                    <td>{order.createdAt.substring(0, 10)}</td>
                     <td>{order.totalPrice}</td>
                     <td className="text-center">
                       {order.isPaid ? (
-                        order.paidAt
+                        order.paidAt.substring(0, 10)
                       ) : (
                         <i
                           className="fas fa-times"
@@ -159,7 +159,7 @@ const ProfileScreen = () => {
                     </td>
                     <td className="text-center">
                       {order.isDelivered ? (
-                        order.deliveredAt.subString(0, 10)
+                        order.deliveredAt.substring(0, 10)
                       ) : (
                         <i
                           className="fas fa-times"
@@ -168,7 +168,7 @@ const ProfileScreen = () => {
                       )}
                     </td>
                     <td>
-                      <LinkContainer to={`/orders/${order._id}`}>
+                      <LinkContainer to={`/order/${order._id}`}>
                         <Button variant="light">Details</Button>
                       </LinkContainer>
                     </td>
