@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import  SearchBox  from "../SearchBox/SearchBox";
 import { logout } from "../../actions/userActions";
 import "./Header.css";
 
@@ -19,10 +20,12 @@ const Header = () => {
         <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect="default">
           <Container>
             <LinkContainer to="/">
+              
               <Navbar.Brand>ProShop</Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
+              <SearchBox />
               <Nav className="ms-auto">
                 <LinkContainer to="/cart">
                   <Nav.Link>
