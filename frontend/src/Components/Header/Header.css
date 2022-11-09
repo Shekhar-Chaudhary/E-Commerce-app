@@ -1,4 +1,4 @@
-
+/* 
 .header {
   background-color: #2874f0;
 }
@@ -41,11 +41,11 @@
   display: flex;
   justify-content: space-evenly;
   flex-wrap: nowrap;
-  /* background-color: #F8F8F8; */
+  background-color: #F8F8F8;
 }
 
 .flex-container > div {
   flex-direction: row;
   
  
-}
+} */
