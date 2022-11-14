@@ -22,27 +22,7 @@ const PaymentScreen = () => {
 
   const dispatch = useDispatch();
 
-  //payment
-  const makePayment = (token) => {
-    const body = {
-      token,
-      product,
-    };
-
-    const headers = {
-      "Content-Type": "application/json"
-    }
-    
-    axios.post('http://localhost:8282/payment', {
-      
-      headers,
-      body: JSON.stringify(body)
-    }).then(res => {
-      console.log(res)
-      const { status } = res;
-      console.log(status)
-    }).catch(err => console.log(err))
-  } 
+ 
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -70,15 +50,7 @@ const PaymentScreen = () => {
                 onChange={(e) => setPaymentMethod(e.target.value)}
               ></Form.Check>
 
-              {/* Stripe Payment */}
-              <Form.Control>
-                <StripeCheckout
-                  stripeKey="pk_test_51M2ZZ1SEnBqVwV4rzpygirQlWfYm4GwfgZI6n72M24DWYmh8qjH0U4HZPhw6D2NFEphvtQmX4F7c5Bm7mYLZ5ZJ9009ZnVra5p"
-                  token={makePayment}
-                  name="Buy React"
-                  amount={product.price * 100}
-                />
-              </Form.Control>
+             
 
               <Form.Check
                 type="radio"

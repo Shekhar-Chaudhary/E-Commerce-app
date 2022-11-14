@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
-import {  useParams } from "react-router-dom";
-import { deliverOrder, getOrderDetails } from "../actions/orderActions.js";
+import { useParams } from "react-router-dom";
+import { deliverOrder, getOrderDetails, payOrder } from "../actions/orderActions.js";
 import Message from "../Components/Message/Message";
 import Loader from "../Components/Loader/Loader";
 import { Link } from "react-router-dom";
-import { ORDER_DELIVER_RESET } from "../constants/orderConstants.js";
+import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from "../constants/orderConstants.js";
 
 const OrderScreen = () => {
   const id = useParams();
@@ -15,11 +17,16 @@ const OrderScreen = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
+
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -36,11 +43,50 @@ const OrderScreen = () => {
     order.taxPrice = addDecimals(Number((0.15 * order.itemsPrice).toFixed()));
   }
 
+  const makePayment = async(token) => {
+    const body = {
+      token,
+      order,
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    console.log(token)
+    dispatch(payOrder(id, token))
+    console.log(dispatch(payOrder(id, token)))
+
+    // fetch("https://localhost:5000/api/config/stripe", {
+    //   method:"POST",
+    //   headers,
+    //   body: JSON.stringify(body),
+    // })
+    // .then((res) => {
+    //   console.log(res);
+    //   const { status } = res;
+    //   console.log(status);
+    // })
+    // .catch((err) => console.log(err));
+    
+    
+   const resPay = axios
+      .post("/api/config/stripe", {
+        headers,
+        body: JSON.stringify(body),
+      })
+      .then((res) => {
+        console.log(res);
+        
+      })
+      .catch((err) => console.log(err));
+      console.log(resPay)
+  };
+
   useEffect(() => {
-    dispatch(getOrderDetails(id));
-    if (successDeliver) {
+    if (!order || successDeliver) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
-      
+      dispatch(getOrderDetails(id));
     }
   }, [dispatch, id, successDeliver]);
 
@@ -172,6 +218,19 @@ const OrderScreen = () => {
                   <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
+              {!order.isPaid && (
+                <ListGroup.Item>
+                  {loadingPay && <Loader />}
+                  <StripeCheckout
+                    stripeKey="pk_test_51M2ZZ1SEnBqVwV4rzpygirQlWfYm4GwfgZI6n72M24DWYmh8qjH0U4HZPhw6D2NFEphvtQmX4F7c5Bm7mYLZ5ZJ9009ZnVra5p"
+                    token={makePayment}
+                    name="Pro Shop"
+                    amount={order.totalPrice * 100}
+                  />
+                </ListGroup.Item>
+              )}
+
               {loadingDeliver && <Loader />}
               {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                 <ListGroup.Item>
